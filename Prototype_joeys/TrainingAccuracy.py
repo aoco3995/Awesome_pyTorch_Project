@@ -19,3 +19,5 @@ class TrainingAccuracy():
 
         print('Accuracy of the network on the 10000 test images: %d %%' % (
                100 * self.correct / self.total))
+
+    #test
