@@ -25,7 +25,7 @@ in_channels = 3
 num_classes = 5
 learning_rate = 2e-6
 batch_size = 4
-num_epochs = 100                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+num_epochs = 2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
 train_percent = 0.9
 
 # Load Data
@@ -104,9 +104,33 @@ def check_accuracy(loader, model):
 
     #model.train()
 
+def check_many(loader, model):
+        # prepare to count predictions for each class
+    correct_pred = {classname: 0 for classname in classes}
+    total_pred = {classname: 0 for classname in classes}
+
+    # again no gradients needed
+    with torch.no_grad():
+        for images, x, y in loader:
+            x = x.to(device, dtype=torch.float32)
+            y = y.to(device)
+            outputs = model(images)
+            _, predictions = torch.max(outputs, 1)
+            # collect the correct predictions for each class
+            for label, prediction in zip(labels, predictions):
+                if label == prediction:
+                    correct_pred[classes[label]] += 1
+                total_pred[classes[label]] += 1
+
+
+    # print accuracy for each class
+    for classname, correct_count in correct_pred.items():
+        accuracy = 100 * float(correct_count) / total_pred[classname]
+        print(f'Accuracy for class: {classname:5s} is {accuracy:.1f} %')
+
 print("Checking accuracy on Training Set")
-check_accuracy(train_loader, model)
+check_many(train_loader, model)
 
 print("Checking Accuracy on Test Set")
-check_accuracy(test_loader, model)
+check_many(test_loader, model)
 
