@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import logging
 
 
 class Trainer():
@@ -43,6 +44,7 @@ class Trainer():
                     running_loss = 0.0
 
             print(f'Cost at epoch {epoch+1} is {sum(losses)/len(losses)}')
+            logging.info('Fininshed Set')
         print('Finished Training')
 
     def save(self):

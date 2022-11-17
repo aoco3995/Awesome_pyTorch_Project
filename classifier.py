@@ -1,13 +1,14 @@
 import torch
-
-import torchvision
 import torchvision.transforms as transforms
+
 from torch.utils.data import DataLoader
 from torch.utils.data import random_split
 from customDataset import projectDataset
+
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
 import numpy as np
+
 from CNN import CNN
 from Trainer import Trainer
 
@@ -17,13 +18,14 @@ transform = transforms.Compose(
 
 # Set Device
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(device)
 
 # Hyperparameters
 in_channels = 3
 num_classes = 5
-learning_rate = 1e-3
+learning_rate = 2e-6
 batch_size = 4
-num_epochs = 10
+num_epochs = 100                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 train_percent = 0.9
 
 # Load Data
@@ -100,7 +102,7 @@ def check_accuracy(loader, model):
 
         print(f'Got {num_correct} / {num_samples} with accuracy {float(num_correct)/float(num_samples)*100:.3f}%')
 
-    model.train()
+    #model.train()
 
 print("Checking accuracy on Training Set")
 check_accuracy(train_loader, model)
