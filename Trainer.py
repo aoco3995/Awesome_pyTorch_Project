@@ -38,8 +38,8 @@ class Trainer():
                 self.optimizer.step()
 
                 running_loss += loss.item()
-                if i % 200 == 199:
-                    print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 200:.3f}')
+                if i % len(data) == len(data)-1:
+                    print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / len(data):.3f}')
                     running_loss = 0.0
 
             print(f'Cost at epoch {epoch+1} is {sum(losses)/len(losses)}')

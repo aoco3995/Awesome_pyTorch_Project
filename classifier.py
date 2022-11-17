@@ -22,32 +22,19 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 in_channels = 3
 num_classes = 5
 learning_rate = 1e-3
-batch_size = 4
-num_epochs = 10
+batch_size = 32
+num_epochs = 3
 train_percent = 0.9
+train_seed = 2
 
 # Load Data
 dataset = projectDataset(csv_file = 'data/project2Dataset.csv', img_dir='data/project2Dataset',transform=None)
-#train_set = projectDataset(csv_file = 'data/project2Dataset.csv', img_dir='data/project2Dataset',transform=transforms.ToTensor())
-#test_set = projectDataset(csv_file='data/test_set.csv', img_dir='data/test_set', transform=transforms.ToTensor())
 train_size = int(train_percent*len(dataset))
 test_size = len(dataset) - train_size
-train_set, test_set = torch.utils.data.random_split(dataset, [train_size, test_size])
+train_set, test_set = torch.utils.data.random_split(dataset, [train_size, test_size], generator=torch.Generator().manual_seed(train_seed))
 train_loader = DataLoader(dataset=train_set, batch_size=batch_size, shuffle=True)
 test_loader = DataLoader(dataset=test_set, batch_size=batch_size, shuffle=False)
-classes = ('pikachu', 'drone', 'dog', 'cat', 'people')
-# torchvision.datasets.CIFAR10.url="http://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz"
-# trainset = torchvision.datasets.CIFAR10(root='./data', train=True,download=True, transform=transform)
-# trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,
-#                                           shuffle=True, num_workers=0)
-
-# testset = torchvision.datasets.CIFAR10(root='./data', train=False,
-#                                        download=True, transform=transform)
-# testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
-#                                          shuffle=False, num_workers=0)
-
-# classes = ('plane', 'car', 'bird', 'cat',
-#            'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
+classes = ('pikachu', 'drone', 'dog', 'cat', 'person')
 
 
 
@@ -84,6 +71,11 @@ trainer.save()
 
 
 def check_accuracy(loader, model):
+
+    # prepare to count predictions for each class
+    correct_pred = {classname: 0 for classname in classes}
+    total_pred = {classname: 0 for classname in classes}
+
     num_correct = 0
     num_samples = 0
     model.eval()
@@ -98,9 +90,18 @@ def check_accuracy(loader, model):
             num_correct += (predictions == y).sum()
             num_samples += (predictions.size(0))
 
-        print(f'Got {num_correct} / {num_samples} with accuracy {float(num_correct)/float(num_samples)*100:.3f}%')
+            for y, predictions in zip(y, predictions):
+                if y == predictions:
+                    correct_pred[classes[y]] += 1
+                total_pred[classes[y]] += 1
 
-    model.train()
+        
+    # print accuracy for each class
+    for classname, correct_count in correct_pred.items():
+        accuracy = 100 * float(correct_count) / total_pred[classname]
+        print(f'Accuracy for class: {classname:5s} is {accuracy:.1f} %')
+    
+    print(f'Got {num_correct} / {num_samples} with accuracy {float(num_correct)/float(num_samples)*100:.3f}%')
 
 print("Checking accuracy on Training Set")
 check_accuracy(train_loader, model)
