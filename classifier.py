@@ -1,5 +1,4 @@
 import torch
-
 import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
@@ -21,11 +20,14 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # Hyperparameters
 in_channels = 3
 num_classes = 5
-learning_rate = 1e-3
-batch_size = 32
-num_epochs = 3
+learning_rate = 1e-8#27e-4
+batch_size = 4
+num_epochs = 96
 train_percent = 0.9
 train_seed = 2
+momentum = 0.4
+weight_decay = 0.2
+dampening = 0.2
 
 # Load Data
 dataset = projectDataset(csv_file = 'data/project2Dataset.csv', img_dir='data/project2Dataset',transform=None)
@@ -65,9 +67,17 @@ def imshow(img):
 model = CNN(in_channels)
 model.to(device)
 
-trainer = Trainer(model, device, learning_rate, num_epochs, train_loader)
-trainer.train()
-trainer.save()
+trainer = Trainer(model, device, learning_rate, num_epochs, train_loader, momentum, weight_decay, dampening)
+if input("Load[y/n]:  ") == "y":
+    PATH = './custom_classifier_dataset.pth'
+    model.load_state_dict(torch.load(PATH))
+    model.eval()
+
+if input("Train[y/n]:  ") == "y":
+    trainer.train()
+
+
+
 
 
 def check_accuracy(loader, model):
@@ -108,4 +118,10 @@ check_accuracy(train_loader, model)
 
 print("Checking Accuracy on Test Set")
 check_accuracy(test_loader, model)
+
+#print("Checking Costs accoss epochs")
+#trainer.cost_list()
+
+if input("Save[y/n]:  ") == "y":
+    trainer.save()
 
