@@ -1,8 +1,4 @@
 import torch
-<<<<<<< HEAD
-import torchvision
-=======
->>>>>>> d2089c868149728f0358ecb22fa1de33e9a9ea1d
 import torchvision.transforms as transforms
 
 from torch.utils.data import DataLoader
@@ -27,15 +23,9 @@ print(device)
 # Hyperparameters
 in_channels = 3
 num_classes = 5
-<<<<<<< HEAD
 learning_rate = 1e-8#27e-4
 batch_size = 4
 num_epochs = 96
-=======
-learning_rate = 2e-6
-batch_size = 4
-num_epochs = 2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
->>>>>>> d2089c868149728f0358ecb22fa1de33e9a9ea1d
 train_percent = 0.9
 train_seed = 2
 momentum = 0.4
@@ -118,46 +108,19 @@ def check_accuracy(loader, model):
                     correct_pred[classes[y]] += 1
                 total_pred[classes[y]] += 1
 
-<<<<<<< HEAD
         
-=======
-    #model.train()
-
-def check_many(loader, model):
-        # prepare to count predictions for each class
-    correct_pred = {classname: 0 for classname in classes}
-    total_pred = {classname: 0 for classname in classes}
-
-    # again no gradients needed
-    with torch.no_grad():
-        for images, x, y in loader:
-            x = x.to(device, dtype=torch.float32)
-            y = y.to(device)
-            outputs = model(images)
-            _, predictions = torch.max(outputs, 1)
-            # collect the correct predictions for each class
-            for label, prediction in zip(labels, predictions):
-                if label == prediction:
-                    correct_pred[classes[label]] += 1
-                total_pred[classes[label]] += 1
-
-
->>>>>>> d2089c868149728f0358ecb22fa1de33e9a9ea1d
     # print accuracy for each class
     for classname, correct_count in correct_pred.items():
         accuracy = 100 * float(correct_count) / total_pred[classname]
         print(f'Accuracy for class: {classname:5s} is {accuracy:.1f} %')
-<<<<<<< HEAD
     
     print(f'Got {num_correct} / {num_samples} with accuracy {float(num_correct)/float(num_samples)*100:.3f}%')
-=======
->>>>>>> d2089c868149728f0358ecb22fa1de33e9a9ea1d
 
 print("Checking accuracy on Training Set")
-check_many(train_loader, model)
+check_accuracy(train_loader, model)
 
 print("Checking Accuracy on Test Set")
-check_many(test_loader, model)
+check_accuracy(test_loader, model)
 
 #print("Checking Costs accoss epochs")
 #trainer.cost_list()
