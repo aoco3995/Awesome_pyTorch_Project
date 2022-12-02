@@ -34,11 +34,15 @@ dampening = 0.2
 
 # Load Data
 dataset = projectDataset(csv_file = 'data/project2Dataset.csv', img_dir='data/project2Dataset',transform=None)
+
 train_size = int(train_percent*len(dataset))
 test_size = len(dataset) - train_size
+
 train_set, test_set = torch.utils.data.random_split(dataset, [train_size, test_size], generator=torch.Generator().manual_seed(train_seed))
+
 train_loader = DataLoader(dataset=train_set, batch_size=batch_size, shuffle=True)
 test_loader = DataLoader(dataset=test_set, batch_size=batch_size, shuffle=False)
+
 classes = ('pikachu', 'drone', 'dog', 'cat', 'person')
 
 
