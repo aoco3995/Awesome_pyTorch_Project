@@ -1,13 +1,14 @@
 import torch
-
-import torchvision
 import torchvision.transforms as transforms
+
 from torch.utils.data import DataLoader
 from torch.utils.data import random_split
 from customDataset import projectDataset
+
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
 import numpy as np
+
 from CNN import CNN
 from Trainer import Trainer
 
@@ -17,23 +18,31 @@ transform = transforms.Compose(
 
 # Set Device
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(device)
 
 # Hyperparameters
 in_channels = 3
 num_classes = 5
-learning_rate = 1e-3
-batch_size = 32
-num_epochs = 3
-train_percent = 0.9
+learning_rate = 1e-3#27e-4
+batch_size = 128
+num_epochs = 32
+train_percent = 0.8
 train_seed = 2
+momentum = 0.4
+weight_decay = 0.2
+dampening = 0.2
 
 # Load Data
-dataset = projectDataset(csv_file = 'data/project2Dataset.csv', img_dir='data/project2Dataset',transform=None)
+dataset = projectDataset(csv_file = 'data/600p_dataset.csv', img_dir='data/600p_dataset',transform=None)
+
 train_size = int(train_percent*len(dataset))
 test_size = len(dataset) - train_size
+
 train_set, test_set = torch.utils.data.random_split(dataset, [train_size, test_size], generator=torch.Generator().manual_seed(train_seed))
+
 train_loader = DataLoader(dataset=train_set, batch_size=batch_size, shuffle=True)
 test_loader = DataLoader(dataset=test_set, batch_size=batch_size, shuffle=False)
+
 classes = ('pikachu', 'drone', 'dog', 'cat', 'person')
 
 
@@ -65,9 +74,17 @@ def imshow(img):
 model = CNN(in_channels)
 model.to(device)
 
-trainer = Trainer(model, device, learning_rate, num_epochs, train_loader)
-trainer.train()
-trainer.save()
+trainer = Trainer(model, device, learning_rate, num_epochs, train_loader, momentum, weight_decay, dampening)
+if input("Load[y/n]:  ") == "y":
+    PATH = './600p_dataset_model.pth'
+    model.load_state_dict(torch.load(PATH))
+    model.eval()
+
+if input("Train[y/n]:  ") == "y":
+    trainer.train()
+
+
+
 
 
 def check_accuracy(loader, model):
@@ -108,4 +125,10 @@ check_accuracy(train_loader, model)
 
 print("Checking Accuracy on Test Set")
 check_accuracy(test_loader, model)
+
+#print("Checking Costs accoss epochs")
+#trainer.cost_list()
+
+if input("Save[y/n]:  ") == "y":
+    trainer.save("600p_dataset_model.pth")
 

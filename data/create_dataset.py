@@ -1,8 +1,8 @@
 import os
 import cv2
 
-def resize_data(in_dir, img_class, img_class_name, out_dir, out_csv, img_size=(500,500), filetype='.jpg', tt=True, nest=False):
-    num = 1
+def resize_data(in_dir, img_class, img_class_name, out_dir, out_csv, img_size=(500,500), filetype='.jpg', tt=True, nest=False, num = 1, max=4000):
+    start = num
     if not os.path.exists(out_dir):
         os.mkdir(out_dir)
 
@@ -25,11 +25,11 @@ def resize_data(in_dir, img_class, img_class_name, out_dir, out_csv, img_size=(5
                 #print(f)
 
             # make sure file is not a directory
-            if os.path.isfile(f) and not ".txt" in f and not ".gif" in f:
+            if os.path.isfile(f) and not ".txt" in f and not ".gif" in f and not ".py" in f:
                 # read image
                 img = cv2.imread(f, cv2.IMREAD_UNCHANGED)
-
                 # resize image to img_size and save as file#.jpg
+                #print(img_class_name + str(num))
                 resized = cv2.resize(img, img_size, interpolation=cv2.INTER_AREA)
                 filename = img_class_name + str(num) + filetype
                 filepath = os.path.join(out_dir, filename)
@@ -40,15 +40,16 @@ def resize_data(in_dir, img_class, img_class_name, out_dir, out_csv, img_size=(5
                 # write image and label to csv
                 csvfile.write(filename + "," + str(img_class) + "\n")
                 
-                if num > 4000:
+                if num - start > max:
                     break
 
-        print("Done resizing " + img_class_name)
+        print(f"Done resizing {in_dir} at {img_class_name} {num}")
+        return num
 
 
 # dataset params
-img_size = (200,200)
-out_dir = 'project2Dataset'
+img_size = (600,600)
+out_dir = '600p_dataset'
 classes = {
     "pikachu": 0,
     "drone": 1,
@@ -56,11 +57,19 @@ classes = {
     "cat": 3,
     "person": 4,
 }
-out_csv = "project2Dataset.csv"
+out_csv = "600p_dataset.csv"
 
+if os.path.exists(out_csv):
+    file = open(out_csv, 'w')
+    file.write("image,label\n")
+    file.close()
 
-resize_data("cats", classes["cat"], "cat", out_dir, out_csv, img_size=img_size)
-resize_data("dogs", classes['dog'], "dog", out_dir, out_csv, img_size=img_size)
-resize_data("drones", classes['drone'], "drone", out_dir, out_csv, img_size=img_size)
-resize_data("faces", classes['person'], "person", out_dir, out_csv, img_size=img_size, nest=True)
-resize_data("pikachu", classes['pikachu'], "pikachu", out_dir, out_csv, img_size=img_size)
+cat_index       = resize_data("cats",         classes["cat"],     "cat",      out_dir, out_csv, img_size=img_size)
+dog_index       = resize_data("dogs",         classes['dog'],     "dog",      out_dir, out_csv, img_size=img_size)
+drone_index     = resize_data("drones",       classes['drone'],   "drone",    out_dir, out_csv, img_size=img_size)
+drone_index     = resize_data("more_drones",  classes['drone'],   "drone",    out_dir, out_csv, img_size=img_size, num=drone_index)
+person_index    = resize_data("faces",        classes['person'],  "person",   out_dir, out_csv, img_size=img_size, nest=True, max=500)
+person_index    = resize_data("pedestrian0",  classes['person'],  "person",   out_dir, out_csv, img_size=img_size, num=person_index)
+person_index    = resize_data("pedestrian1",  classes['person'],  "person",   out_dir, out_csv, img_size=img_size, num=person_index)
+person_index    = resize_data("human",        classes['person'],  "person",   out_dir, out_csv, img_size=img_size, num=person_index)
+pikachu_index   = resize_data("pikachu",      classes['pikachu'], "pikachu",  out_dir, out_csv, img_size=img_size)
