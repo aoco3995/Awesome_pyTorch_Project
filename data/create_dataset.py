@@ -48,8 +48,8 @@ def resize_data(in_dir, img_class, img_class_name, out_dir, out_csv, img_size=(5
 
 
 # dataset params
-img_size = (600,600)
-out_dir = '600p_dataset'
+img_size = (200,200)
+out_dir = '200p_dataset'
 classes = {
     "pikachu": 0,
     "drone": 1,
@@ -57,7 +57,7 @@ classes = {
     "cat": 3,
     "person": 4,
 }
-out_csv = "600p_dataset.csv"
+out_csv = out_dir+".csv"
 
 if os.path.exists(out_csv):
     file = open(out_csv, 'w')

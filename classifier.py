@@ -23,17 +23,17 @@ print(device)
 # Hyperparameters
 in_channels = 3
 num_classes = 5
-learning_rate = 1e-3#27e-4
+learning_rate = 5e-5#27e-4
 batch_size = 128
-num_epochs = 32
+num_epochs = 256
 train_percent = 0.8
 train_seed = 2
-momentum = 0.4
-weight_decay = 0.2
-dampening = 0.2
+momentum = 0.9
+weight_decay = 0.01
+dampening = 0.01
 
 # Load Data
-dataset = projectDataset(csv_file = 'data/600p_dataset.csv', img_dir='data/600p_dataset',transform=None)
+dataset = projectDataset(csv_file = 'data/200p_dataset.csv', img_dir='data/200p_dataset',transform=None)
 
 train_size = int(train_percent*len(dataset))
 test_size = len(dataset) - train_size
@@ -76,7 +76,7 @@ model.to(device)
 
 trainer = Trainer(model, device, learning_rate, num_epochs, train_loader, momentum, weight_decay, dampening)
 if input("Load[y/n]:  ") == "y":
-    PATH = './600p_dataset_model.pth'
+    PATH = './200p_dataset_model.pth'
     model.load_state_dict(torch.load(PATH))
     model.eval()
 

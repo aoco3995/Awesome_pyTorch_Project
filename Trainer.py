@@ -42,8 +42,11 @@ class Trainer():
                 if i % len(data) == len(data)-1:
                     print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / len(data):.3f}')
                     running_loss = 0.0
-            print(f'Cost at epoch {epoch+1} is {sum(losses)/len(losses)}')
-            self.cost.append(sum(losses)/len(losses))
+            cost = sum(losses)/len(losses)
+            print(f'Cost at epoch {epoch+1} is {cost}')
+            self.cost.append(cost)
+            if(cost < 0.02):
+                break
         print('Finished Training')
 
     def save(self, PATH = './custom_classifier_dataset.pth'):
