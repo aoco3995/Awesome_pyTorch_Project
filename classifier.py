@@ -12,6 +12,8 @@ import numpy as np
 from CNN import CNN
 from Trainer import Trainer
 
+import os
+
 transform = transforms.Compose(
     [transforms.ToTensor(),
      transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
@@ -24,10 +26,10 @@ print(device)
 in_channels = 3
 num_classes = 5
 learning_rate = 5e-5#27e-4
-batch_size = 128
-num_epochs = 256
-train_percent = 0.8
-train_seed = 2
+batch_size = 256
+num_epochs = 512
+train_percent = 0.9
+train_seed = 3
 momentum = 0.9
 weight_decay = 0.01
 dampening = 0.01
@@ -75,8 +77,8 @@ model = CNN(in_channels)
 model.to(device)
 
 trainer = Trainer(model, device, learning_rate, num_epochs, train_loader, momentum, weight_decay, dampening)
+PATH = './200p_dataset_model.pth'
 if input("Load[y/n]:  ") == "y":
-    PATH = './200p_dataset_model.pth'
     model.load_state_dict(torch.load(PATH))
     model.eval()
 
@@ -128,7 +130,11 @@ check_accuracy(test_loader, model)
 
 #print("Checking Costs accoss epochs")
 #trainer.cost_list()
-
-if input("Save[y/n]:  ") == "y":
-    trainer.save("600p_dataset_model.pth")
+num = 1
+while os.path.exists(PATH):
+    PATH = PATH+str(num)
+    num+=1
+    
+if input(f"Save to {PATH}? [y/n]:  ") == "y":
+    trainer.save(PATH)
 
