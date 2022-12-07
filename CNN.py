@@ -3,7 +3,7 @@ import torch.nn.functional as F
 
 
 class CNN(nn.Module):
-    def __init__(self,in_channels):
+    def __init__(self,in_channels=3):
         super(CNN,self).__init__()
         self.conv1 = nn.Conv2d(in_channels=in_channels, out_channels=10, kernel_size=(3,3), stride=(1,1), padding=(1,1))
         self.pool = nn.MaxPool2d(kernel_size=(2,2), stride=(2,2))

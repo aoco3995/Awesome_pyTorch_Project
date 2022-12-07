@@ -79,8 +79,10 @@ model.to(device)
 trainer = Trainer(model, device, learning_rate, num_epochs, train_loader, momentum, weight_decay, dampening)
 PATH = './200p_dataset_model.pth'
 if input("Load[y/n]:  ") == "y":
-    model.load_state_dict(torch.load(PATH))
-    model.eval()
+    device = torch.device('cpu')
+    model.to(device)
+    model.load_state_dict(torch.load(PATH, map_location=device))
+    #model.eval()
 
 if input("Train[y/n]:  ") == "y":
     trainer.train()
@@ -97,22 +99,23 @@ def check_accuracy(loader, model):
 
     num_correct = 0
     num_samples = 0
-    model.eval()
+    #model.eval()
 
     with torch.no_grad():
         for _, x, y in loader:
-            x = x.to(device, dtype=torch.float32)
-            y = y.to(device)
+            x = x.to(device,dtype=torch.float)
+            y = y.to(device,dtype=torch.float)
 
             scores = model(x)
+            print(scores)
             _, predictions = scores.max(1)
             num_correct += (predictions == y).sum()
             num_samples += (predictions.size(0))
 
-            for y, predictions in zip(y, predictions):
-                if y == predictions:
-                    correct_pred[classes[y]] += 1
-                total_pred[classes[y]] += 1
+            for yl, predictionsl in zip(y, predictions):
+                if yl == predictionsl:
+                    correct_pred[classes[yl.to(torch.int32)]] += 1
+                total_pred[classes[yl.to(torch.int32)]] += 1
 
         
     # print accuracy for each class
