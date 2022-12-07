@@ -25,13 +25,13 @@ print(device)
 # Hyperparameters
 in_channels = 3
 num_classes = 5
-learning_rate = 5e-5#27e-4
+learning_rate = 5e-4#27e-4
 batch_size = 256
 num_epochs = 512
 train_percent = 0.9
 train_seed = 3
 momentum = 0.9
-weight_decay = 0.015
+weight_decay = 0.01
 dampening = 0.01
 
 # Load Data

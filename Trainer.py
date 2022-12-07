@@ -40,7 +40,7 @@ class Trainer():
 
                 running_loss += loss.item()
                 if i % len(data) == len(data)-1:
-                    print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / len(data):.3f}')
+                    #print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / len(data):.3f}')
                     running_loss = 0.0
             cost = sum(losses)/len(losses)
             print(f'Cost at epoch {epoch+1} is {cost}')
