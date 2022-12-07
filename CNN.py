@@ -15,7 +15,7 @@ class CNN(nn.Module):
         self.fc3 = nn.Linear(80, 40)
         self.fc4 = nn.Linear(40, 5)
 
-        self.dropout = nn.Dropout(p=0.1) 
+        self.dropout = nn.Dropout(p=0.15) 
 
     def forward(self, x):
         x = self.pool(F.relu(self.conv1(x)))
