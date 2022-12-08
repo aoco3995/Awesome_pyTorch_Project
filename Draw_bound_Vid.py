@@ -59,10 +59,11 @@ def draw_rectangle_with_label(image, label, x, y, width, height, color):
 
 image_array = []
 #load the video 
-video = cv2.VideoCapture('slideshow.mp4') 
+video = cv2.VideoCapture('Test video\Test_Vid.mp4') 
 
 #create a while loop to read the video frames 
 i = 61
+images_drawn = 0
 first_region = False
 while True: 
     #read the next frame from the video 
@@ -79,6 +80,7 @@ while True:
         box_region = get_bound_area(frame, bounding_class, Threshold)
         i = 0
         first_region = True
+        images_drawn = images_drawn + 1
     i = i + 1
     #draw a bounding box around the frame 
     if first_region == True:
@@ -90,7 +92,9 @@ while True:
   
     #wait for the user to press a key 
     key = cv2.waitKey(1) 
-  
+    
+    if images_drawn > 60:
+        break
     #if the user presses 'q', then break out of the loop 
     if key == ord("q"): 
         break 
