@@ -16,16 +16,16 @@ classes = ('pikachu', 'drone', 'dog', 'cat', 'person')
 model = CNN(in_channels)
 model.to(device)
 
-PATH = './custom_classifier_dataset.pth'
+PATH = '200p_dataset_model_79_percent.pth'
 device = torch.device('cpu')
 model.to(device)
 model.load_state_dict(torch.load(PATH, map_location=device))
 
-def predict_image(image):
+def predict_image(image, Threshold):
     cv2.imshow("",image)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     image = cv2.resize(image, (200,200))
-    image = np.transpose(image, (1,0,2))
+    #image = np.transpose(image, (1,0,2))
     #print(image)
     transform = transforms.Compose([transforms.ToTensor()])
     x = transform(image)
@@ -35,9 +35,13 @@ def predict_image(image):
     x = x * 255
     scores = model(x)
     #print(scores)
-    _, prediction = scores.max(1)
-    print(classes[prediction])
-    return str(classes[prediction])
+    score_val, prediction = scores.max(1)
+    #print(score_val)
+    if score_val[0] > Threshold:
+        #print(classes[prediction])
+        return score_val[0], str(classes[prediction])
+    else:
+        return "none"
 
 # while True:
 #     key = cv2.waitKey(1)

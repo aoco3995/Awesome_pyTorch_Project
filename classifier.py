@@ -11,6 +11,13 @@ import numpy as np
 
 from CNN import CNN
 from Trainer import Trainer
+import pickle
+
+class CPU_Unpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        if module == 'torch.storage' and name == '_load_from_bytes':
+            return lambda b: torch.load(io.BytesIO(b), map_location='cpu')
+        else: return super().find_class(module, name)
 
 transform = transforms.Compose(
     [transforms.ToTensor(),
@@ -77,7 +84,11 @@ model.to(device)
 trainer = Trainer(model, device, learning_rate, num_epochs, train_loader, momentum, weight_decay, dampening)
 if input("Load[y/n]:  ") == "y":
     PATH = './custom_classifier_dataset.pth'
-    model.load_state_dict(torch.load(PATH))
+
+    with open(PATH, "rb") as f:
+        contents = CPU_Unpickler(f).load()
+
+    model.load_state_dict(torch.load(contents), map_location=torch.device('cpu'))
     model.eval()
 
 if input("Train[y/n]:  ") == "y":
