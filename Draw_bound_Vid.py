@@ -3,6 +3,25 @@ import cv2
 import bound_box
 from bound_box import get_bound_area
 from test_any_size_image_on_cpu import predict_image
+import numpy as np
+
+def array_to_mp4(image_array, video_name, fps=30):
+    
+    # get the size of the array
+    height, width, layers = np.shape(image_array[0])
+    
+    # define the video codec
+    video_codec = cv2.VideoWriter_fourcc(*'mp4v')
+    
+    # create the video writer
+    video = cv2.VideoWriter(video_name, video_codec, fps, (width,height))
+    
+    # add each image to the video
+    for image in image_array:
+        video.write(image)
+        
+    # release the video writer
+    video.release()
 
 def draw_rectangle_with_label(image, label, x, y, width, height, color):
   """
@@ -38,8 +57,9 @@ def draw_rectangle_with_label(image, label, x, y, width, height, color):
 
   return image
 
+image_array = []
 #load the video 
-video = cv2.VideoCapture('Test video\Test_Vid.mp4') 
+video = cv2.VideoCapture('slideshow.mp4') 
 
 #create a while loop to read the video frames 
 i = 61
@@ -63,7 +83,7 @@ while True:
     #draw a bounding box around the frame 
     if first_region == True:
         #cv2.rectangle(frame, box_region[0], box_region[1], (255, 0, 0), 2) 
-        draw_rectangle_with_label(frame, bounding_class, box_region[0][0], box_region[0][1], box_region[1][0], box_region[1][1], (255,0,0))
+        image_array.append(draw_rectangle_with_label(frame, bounding_class, box_region[0][0], box_region[0][1], box_region[1][0], box_region[1][1], (255,0,0)))
   
     #show the frame 
     cv2.imshow("Frame", frame) 
@@ -75,6 +95,8 @@ while True:
     if key == ord("q"): 
         break 
   
+array_to_mp4(image_array, "Demo.mp4", fps=30)
+
 #release the video capture object 
 video.release() 
 
