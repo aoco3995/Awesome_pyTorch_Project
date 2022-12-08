@@ -54,7 +54,7 @@ while True:
     if not grabbed: 
         break 
     
-    if i > 15:
+    if i > 30:
         Threshold, bounding_class = predict_image(frame, -1)
         box_region = get_bound_area(frame, bounding_class, Threshold)
         i = 0

@@ -37,11 +37,11 @@ def predict_image(image, Threshold):
     #print(scores)
     score_val, prediction = scores.max(1)
     #print(score_val)
-    if score_val[0] > Threshold:
+    if score_val[0] >= Threshold:
         #print(classes[prediction])
         return score_val[0], str(classes[prediction])
     else:
-        return "none"
+        return 0,"none"
 
 # while True:
 #     key = cv2.waitKey(1)

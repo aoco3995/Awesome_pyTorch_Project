@@ -21,7 +21,7 @@ def mask_outside_area(img, x1, y1, x2, y2):
 
     return result
     
-def get_bound_area(input_img, class_to_look_for, threhold):
+def get_bound_area(input_img, class_to_look_for, threshold):
     # dir = 'crops'
     # for f in os.listdir(dir):
     #     os.remove(os.path.join(dir, f))
@@ -49,6 +49,7 @@ def get_bound_area(input_img, class_to_look_for, threhold):
     #     i = i + 1
 
     min_contour ="not set"
+    threshold_to_beat = threshold 
     # find contours and get the external one'
     for threshed in threshed_img:
         contours, hier = cv2.findContours(threshed, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -71,8 +72,10 @@ def get_bound_area(input_img, class_to_look_for, threhold):
                 #v2.imwrite("crops\\"+str(x)+str(y)+".png", crop_img)
                 #masked_image = mask_outside_area(orig_img,x,y,x+w, y+h,)
                 #cv2.imshow("Frame Under Review", masked_image)
-                if predict_image(crop_img, threhold)[1] == class_to_look_for:
-                    if cv2.contourArea(c) < min_con_area:
+                new_thresh, found_class = predict_image(crop_img, threshold_to_beat)
+                if found_class == class_to_look_for: 
+                    if new_thresh >= threshold_to_beat:
+                        #if cv2.contourArea(c) < min_con_area:
                         min_contour = c
 
     # w = orig_img.shape[1]/4
@@ -97,7 +100,7 @@ def get_bound_area(input_img, class_to_look_for, threhold):
     else:
         x, y, w, h = cv2.boundingRect(min_contour)
     cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 2)
-    return (x,y), (x+w, y+h)
+    return (x,y), (w,h)
 
     #print(len(contours))
     cv2.drawContours(img, contours, -1, (255, 255, 0), 1)
