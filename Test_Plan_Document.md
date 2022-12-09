@@ -5,22 +5,57 @@ The purpose of the unit tests is to ensure the correctness and reliability of th
 
 Scope:
 The scope of the unit tests includes the following components:
-- [list the components that will be covered by the unit tests]
+- predict_image() function: Test that the predict_image() function returns the expected output and can handle invalid inputs
+- draw_rectangle_with_label() function: Test that the draw_rectangle_with_label() function returns the expected output
+- mask_outside_area() function: Test that the mask_outside_area() function returns the expected output
+- get_bound_area() function: Test that the get_bound_area() function returns the expected output
 
 Test Environment:
 The unit tests will be run on the following hardware and software setup:
-- Operating System: [e.g. Windows 10, macOS Mojave]
-- Programming Language: [e.g. Python 3.7, Java 8]
+- Operating System: Windows 10
+- Programming Language: Python 3.7
 
 Test Approach:
-The unit tests will be designed and implemented using a test-driven development (TDD) methodology. This means that the tests will be written before the implementation code, and the implementation code will be written to make the tests pass.
+The unit tests will be run using continuous integration. This means that the tests will be automatically executed whenever the code is pushed to the repository.
+
+The continuous integration system will be responsible for checking out the code from the repository, installing any necessary dependencies, and running the unit tests. If any of the tests fail, the continuous integration system will send a notification to the development team, and the team can investigate and fix the issue.
+
+In addition to continuous integration, the unit tests will be designed and implemented using a test-driven development (TDD) methodology. This means that the tests will be written before the implementation code, and the implementation code will be written to make the tests pass.
 
 Test Cases:
-The unit tests will include the following test cases:
+The unit tests will cover the following test cases:
 
-[list the individual test cases, including the input values and expected output values]
+Test Case 1: predict_image() returns correct output
+- Test Steps:
+  1. Call predict_image() with a valid image and threshold
+  2. Check that the function returns the expected score and prediction
+- Expected Result:
+  - predict_image() should return a score of 0.9 and a prediction of 'pikachu'
 
-Test Schedule:
-The unit tests will be implemented and executed according to the following schedule:
+Test Case 2: predict_image() handles invalid inputs
+- Test Steps:
+  1. Call predict_image() with no image and a threshold
+  2. Check that the function returns the expected score and prediction
+- Expected Result:
+  - predict_image() should return a score of 0 and a prediction of 'none'
 
-[list the expected start and end dates for implementing and executing the unit tests]
+Test Case 3: draw_rectangle_with_label() returns correct output
+- Test Steps:
+  1. Call draw_rectangle_with_label() with a valid image, label, coordinates, and color
+  2. Check that the function returns the expected result
+- Expected Result:
+  - draw_rectangle_with_label() should return a modified image with the rectangle and label drawn on it
+
+Test Case 4: mask_outside_area() returns correct output
+- Test Steps:
+  1. Call mask_outside_area() with a valid image and coordinates
+  2. Check that the function returns the expected result
+- Expected Result:
+  - mask_outside_area() should return a modified image with the outside area masked
+
+Test Case 5: get_bound_area() returns correct output
+- Test Steps:
+  1. Call get_bound_area() with a valid image, class to look for, and threshold
+  2. Check that the function returns the expected result
+- Expected Result:
+  - get_bound_area() should return the bounding box coordinates for the specified class
