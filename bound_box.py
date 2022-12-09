@@ -7,6 +7,25 @@ from test_any_size_image_on_cpu import predict_image
 
 
 def mask_outside_area(img, x1, y1, x2, y2):
+    """
+    Mask an area outside of a given rectangle in an image.
+    
+    This function creates a black mask with a white rectangle defined by the
+    (x1, y1) and (x2, y2) coordinates, and then applies the mask to the input image
+    to mask out the area outside of the rectangle.
+    
+    Args:
+        img (numpy.ndarray): the input image as a NumPy array
+        x1 (int): the x-coordinate of the top-left corner of the rectangle
+        y1 (int): the y-coordinate of the top-left corner of the rectangle
+        x2 (int): the x-coordinate of the bottom-right corner of the rectangle
+        y2 (int): the y-coordinate of the bottom-right corner of the rectangle
+        
+    Returns:
+        numpy.ndarray: the masked image as a NumPy array
+    """
+
+
     # create a mask
     mask = np.zeros(img.shape, dtype=np.uint8)
 
@@ -22,6 +41,29 @@ def mask_outside_area(img, x1, y1, x2, y2):
     return result
     
 def get_bound_area(input_img, class_to_look_for, threshold):
+    """
+    Detect an object of a given class in an image.
+    
+    This function applies multiple thresholding operations to the input image and
+    finds contours in the thresholded images. For each contour that has an area
+    greater than 1/8 of the image's total area, it applies a mask to the original
+    image to mask out everything outside of the contour and passes the masked 
+    image to a `predict_image()` function. If the `predict_image()` function 
+    returns a prediction of the class that we are looking for and has a 
+    confidence greater than the given `threshold`, the contour with the minimum
+    area is saved. Finally, the bounding box coordinates of the minimum contour
+    are returned.
+    
+    Args:
+        input_img (numpy.ndarray): the input image as a NumPy array
+        class_to_look_for (str): the class of object to look for in the image
+        threshold (float): a threshold value for detecting the object
+        
+    Returns:
+        tuple: a tuple containing the bounding box coordinates of the detected
+            object (x1, y1, x2, y2)
+    """
+
     # dir = 'crops'
     # for f in os.listdir(dir):
     #     os.remove(os.path.join(dir, f))

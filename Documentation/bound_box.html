@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module bound_box</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>bound_box</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Cstolf%5Conedrive%5Cgit%20directs%5Cawesome_pytorch_project%5Cbound_box.py">c:\users\stolf\onedrive\git directs\awesome_pytorch_project\bound_box.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="copy.html">copy</a><br>
+<a href="cv2.html">cv2</a><br>
+</td><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+<a href="os.html">os</a><br>
+</td><td width="25%" valign=top><a href="test_any_size_image_on_cpu.html">test_any_size_image_on_cpu</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-get_bound_area"><strong>get_bound_area</strong></a>(input_img, class_to_look_for, threshold)</dt><dd><tt>Detect&nbsp;an&nbsp;object&nbsp;of&nbsp;a&nbsp;given&nbsp;class&nbsp;in&nbsp;an&nbsp;image.<br>
+&nbsp;<br>
+This&nbsp;function&nbsp;applies&nbsp;multiple&nbsp;thresholding&nbsp;operations&nbsp;to&nbsp;the&nbsp;input&nbsp;image&nbsp;and<br>
+finds&nbsp;contours&nbsp;in&nbsp;the&nbsp;thresholded&nbsp;images.&nbsp;For&nbsp;each&nbsp;contour&nbsp;that&nbsp;has&nbsp;an&nbsp;area<br>
+greater&nbsp;than&nbsp;1/8&nbsp;of&nbsp;the&nbsp;image's&nbsp;total&nbsp;area,&nbsp;it&nbsp;applies&nbsp;a&nbsp;mask&nbsp;to&nbsp;the&nbsp;original<br>
+image&nbsp;to&nbsp;mask&nbsp;out&nbsp;everything&nbsp;outside&nbsp;of&nbsp;the&nbsp;contour&nbsp;and&nbsp;passes&nbsp;the&nbsp;masked&nbsp;<br>
+image&nbsp;to&nbsp;a&nbsp;`predict_image()`&nbsp;function.&nbsp;If&nbsp;the&nbsp;`predict_image()`&nbsp;function&nbsp;<br>
+returns&nbsp;a&nbsp;prediction&nbsp;of&nbsp;the&nbsp;class&nbsp;that&nbsp;we&nbsp;are&nbsp;looking&nbsp;for&nbsp;and&nbsp;has&nbsp;a&nbsp;<br>
+confidence&nbsp;greater&nbsp;than&nbsp;the&nbsp;given&nbsp;`threshold`,&nbsp;the&nbsp;contour&nbsp;with&nbsp;the&nbsp;minimum<br>
+area&nbsp;is&nbsp;saved.&nbsp;Finally,&nbsp;the&nbsp;bounding&nbsp;box&nbsp;coordinates&nbsp;of&nbsp;the&nbsp;minimum&nbsp;contour<br>
+are&nbsp;returned.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;input_img&nbsp;(numpy.ndarray):&nbsp;the&nbsp;input&nbsp;image&nbsp;as&nbsp;a&nbsp;NumPy&nbsp;array<br>
+&nbsp;&nbsp;&nbsp;&nbsp;class_to_look_for&nbsp;(str):&nbsp;the&nbsp;class&nbsp;of&nbsp;object&nbsp;to&nbsp;look&nbsp;for&nbsp;in&nbsp;the&nbsp;image<br>
+&nbsp;&nbsp;&nbsp;&nbsp;threshold&nbsp;(float):&nbsp;a&nbsp;threshold&nbsp;value&nbsp;for&nbsp;detecting&nbsp;the&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tuple:&nbsp;a&nbsp;tuple&nbsp;containing&nbsp;the&nbsp;bounding&nbsp;box&nbsp;coordinates&nbsp;of&nbsp;the&nbsp;detected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;object&nbsp;(x1,&nbsp;y1,&nbsp;x2,&nbsp;y2)</tt></dd></dl>
+ <dl><dt><a name="-mask_outside_area"><strong>mask_outside_area</strong></a>(img, x1, y1, x2, y2)</dt><dd><tt>Mask&nbsp;an&nbsp;area&nbsp;outside&nbsp;of&nbsp;a&nbsp;given&nbsp;rectangle&nbsp;in&nbsp;an&nbsp;image.<br>
+&nbsp;<br>
+This&nbsp;function&nbsp;creates&nbsp;a&nbsp;black&nbsp;mask&nbsp;with&nbsp;a&nbsp;white&nbsp;rectangle&nbsp;defined&nbsp;by&nbsp;the<br>
+(x1,&nbsp;y1)&nbsp;and&nbsp;(x2,&nbsp;y2)&nbsp;coordinates,&nbsp;and&nbsp;then&nbsp;applies&nbsp;the&nbsp;mask&nbsp;to&nbsp;the&nbsp;input&nbsp;image<br>
+to&nbsp;mask&nbsp;out&nbsp;the&nbsp;area&nbsp;outside&nbsp;of&nbsp;the&nbsp;rectangle.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;img&nbsp;(numpy.ndarray):&nbsp;the&nbsp;input&nbsp;image&nbsp;as&nbsp;a&nbsp;NumPy&nbsp;array<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x1&nbsp;(int):&nbsp;the&nbsp;x-coordinate&nbsp;of&nbsp;the&nbsp;top-left&nbsp;corner&nbsp;of&nbsp;the&nbsp;rectangle<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y1&nbsp;(int):&nbsp;the&nbsp;y-coordinate&nbsp;of&nbsp;the&nbsp;top-left&nbsp;corner&nbsp;of&nbsp;the&nbsp;rectangle<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x2&nbsp;(int):&nbsp;the&nbsp;x-coordinate&nbsp;of&nbsp;the&nbsp;bottom-right&nbsp;corner&nbsp;of&nbsp;the&nbsp;rectangle<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y2&nbsp;(int):&nbsp;the&nbsp;y-coordinate&nbsp;of&nbsp;the&nbsp;bottom-right&nbsp;corner&nbsp;of&nbsp;the&nbsp;rectangle<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numpy.ndarray:&nbsp;the&nbsp;masked&nbsp;image&nbsp;as&nbsp;a&nbsp;NumPy&nbsp;array</tt></dd></dl>
+</td></tr></table>
+</body></html>

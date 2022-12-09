@@ -6,6 +6,14 @@ from test_any_size_image_on_cpu import predict_image
 import numpy as np
 
 def array_to_mp4(image_array, video_name, fps=30):
+
+    """Converts an array of images to an MP4 video.
+
+    Args:
+        image_array (numpy.ndarray): Array of images to convert.
+        video_name (str): Name of the output video file.
+        fps (int, optional): Frame rate of the output video. Defaults to 30.
+    """
     
     # get the size of the array
     height, width, layers = np.shape(image_array[0])
