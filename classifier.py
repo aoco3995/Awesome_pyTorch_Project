@@ -1,10 +1,23 @@
 import torch
-import torch.optim as optim
-import torchvision
 import torchvision.transforms as transforms
+
 from torch.utils.data import DataLoader
 from torch.utils.data import random_split
 from customDataset import projectDataset
+
+import torch.nn.functional as F
+import matplotlib.pyplot as plt
+import numpy as np
+
+from CNN import CNN
+from Trainer import Trainer
+import pickle
+
+class CPU_Unpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        if module == 'torch.storage' and name == '_load_from_bytes':
+            return lambda b: torch.load(io.BytesIO(b), map_location='cpu')
+        else: return super().find_class(module, name)
 
 transform = transforms.Compose(
     [transforms.ToTensor(),
@@ -12,41 +25,35 @@ transform = transforms.Compose(
 
 # Set Device
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(device)
 
 # Hyperparameters
 in_channels = 3
 num_classes = 5
-learning_rate = 1e-3
+learning_rate = 1e-8#27e-4
 batch_size = 4
-num_epochs = 10
+num_epochs = 96
 train_percent = 0.9
+train_seed = 2
+momentum = 0.4
+weight_decay = 0.2
+dampening = 0.2
 
 # Load Data
 dataset = projectDataset(csv_file = 'data/project2Dataset.csv', img_dir='data/project2Dataset',transform=None)
-#train_set = projectDataset(csv_file = 'data/project2Dataset.csv', img_dir='data/project2Dataset',transform=transforms.ToTensor())
-#test_set = projectDataset(csv_file='data/test_set.csv', img_dir='data/test_set', transform=transforms.ToTensor())
+
 train_size = int(train_percent*len(dataset))
 test_size = len(dataset) - train_size
-train_set, test_set = torch.utils.data.random_split(dataset, [train_size, test_size])
+
+train_set, test_set = torch.utils.data.random_split(dataset, [train_size, test_size], generator=torch.Generator().manual_seed(train_seed))
+
 train_loader = DataLoader(dataset=train_set, batch_size=batch_size, shuffle=True)
 test_loader = DataLoader(dataset=test_set, batch_size=batch_size, shuffle=False)
-classes = ('pikachu', 'drone', 'dog', 'cat', 'people')
-# torchvision.datasets.CIFAR10.url="http://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz"
-# trainset = torchvision.datasets.CIFAR10(root='./data', train=True,download=True, transform=transform)
-# trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,
-#                                           shuffle=True, num_workers=0)
 
-# testset = torchvision.datasets.CIFAR10(root='./data', train=False,
-#                                        download=True, transform=transform)
-# testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
-#                                          shuffle=False, num_workers=0)
-
-# classes = ('plane', 'car', 'bird', 'cat',
-#            'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
+classes = ('pikachu', 'drone', 'dog', 'cat', 'person')
 
 
-import matplotlib.pyplot as plt
-import numpy as np
+
 
 # functions to show an image
 
@@ -67,76 +74,36 @@ def imshow(img):
 # print labels
 #print(' '.join(f'{classes[labels[j]]:5s}' for j in range(batch_size)))
 
-import torch.nn as nn
-import torch.nn.functional as F
 
-
-class CNN(nn.Module):
-    def __init__(self):
-        super(CNN,self).__init__()
-        self.conv1 = nn.Conv2d(in_channels=in_channels, out_channels=10, kernel_size=(3,3), stride=(1,1), padding=(1,1))
-        self.pool = nn.MaxPool2d(kernel_size=(2,2), stride=(2,2))
-        self.conv2 = nn.Conv2d(in_channels=10, out_channels=10, kernel_size=(3,3), stride=(1,1), padding=(1,1))
-        self.fc1 = nn.Linear(10 * 50 * 50, 5)
-        #self.fc1 = nn.Linear(10 * 50 * 50, 120)
-        #self.fc2 = nn.Linear(120, 84)
-        #self.fc3 = nn.Linear(84, 5)
-
-    def forward(self, x):
-        x = F.relu(self.conv1(x))
-        x = self.pool(x)
-        x = F.relu(self.conv2(x))
-        x = self.pool(x)
-        x = x.reshape(x.shape[0], -1)
-        #x = F.relu(self.fc1(x))
-        #x = F.relu(self.fc2(x))
-        #x = self.fc3(x)
-        x = self.fc1(x)
-        return x
 
 
 #model = torchvision.models.resnet50()
-model = CNN()
+model = CNN(in_channels)
 model.to(device)
 
-criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+trainer = Trainer(model, device, learning_rate, num_epochs, train_loader, momentum, weight_decay, dampening)
+if input("Load[y/n]:  ") == "y":
+    PATH = './custom_classifier_dataset.pth'
 
-for epoch in range(num_epochs):  # loop over the dataset multiple times
+    with open(PATH, "rb") as f:
+        contents = CPU_Unpickler(f).load()
 
-    losses = []
-    running_loss = 0.0
-    for i, (_, data, targets) in enumerate(train_loader):
-        # Get data to cuda if possible
-        data = data.to(device, dtype=torch.float32)
-        targets = targets.to(device)
+    model.load_state_dict(torch.load(contents), map_location=torch.device('cpu'))
+    model.eval()
 
-        # forward
-        scores = model(data)
-        loss = criterion(scores, targets)
+if input("Train[y/n]:  ") == "y":
+    trainer.train()
 
-        losses.append(loss.item())
 
-        # backward
-        optimizer.zero_grad()
-        loss.backward()
 
-        # gradient decent
-        optimizer.step()
 
-        running_loss += loss.item()
-        if i % 200 == 199:
-            print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 200:.3f}')
-            running_loss = 0.0
-
-    print(f'Cost at epoch {epoch+1} is {sum(losses)/len(losses)}')
-
-print('Finished Training')
-
-PATH = './custom_classifier_dataset.pth'
-torch.save(model.state_dict(), PATH)
 
 def check_accuracy(loader, model):
+
+    # prepare to count predictions for each class
+    correct_pred = {classname: 0 for classname in classes}
+    total_pred = {classname: 0 for classname in classes}
+
     num_correct = 0
     num_samples = 0
     model.eval()
@@ -151,13 +118,28 @@ def check_accuracy(loader, model):
             num_correct += (predictions == y).sum()
             num_samples += (predictions.size(0))
 
-        print(f'Got {num_correct} / {num_samples} with accuracy {float(num_correct)/float(num_samples)*100:.3f}%')
+            for y, predictions in zip(y, predictions):
+                if y == predictions:
+                    correct_pred[classes[y]] += 1
+                total_pred[classes[y]] += 1
 
-    model.train()
+        
+    # print accuracy for each class
+    for classname, correct_count in correct_pred.items():
+        accuracy = 100 * float(correct_count) / total_pred[classname]
+        print(f'Accuracy for class: {classname:5s} is {accuracy:.1f} %')
+    
+    print(f'Got {num_correct} / {num_samples} with accuracy {float(num_correct)/float(num_samples)*100:.3f}%')
 
 print("Checking accuracy on Training Set")
 check_accuracy(train_loader, model)
 
 print("Checking Accuracy on Test Set")
 check_accuracy(test_loader, model)
+
+#print("Checking Costs accoss epochs")
+#trainer.cost_list()
+
+if input("Save[y/n]:  ") == "y":
+    trainer.save()
 
