@@ -65,20 +65,20 @@ def resize_data(in_dir, img_class, img_class_name, out_dir, out_csv, img_size=(5
 
 
 # dataset params
-#img_size = (200,200)
-#out_dir = 'project2Dataset'
-#classes = {
-#    "pikachu": 0,
-#    "drone": 1,
-#    "dog": 2,
-#    "cat": 3,
-#    "person": 4,
-#}
-#out_csv = "project2Dataset.csv"
+img_size = (200,200)
+out_dir = 'project2Dataset'
+classes = {
+    "pikachu": 0,
+    "drone": 1,
+    "dog": 2,
+    "cat": 3,
+    "person": 4,
+}
+out_csv = "project2Dataset.csv"
 
 
-#resize_data("cats", classes["cat"], "cat", out_dir, out_csv, img_size=img_size)
-#resize_data("dogs", classes['dog'], "dog", out_dir, out_csv, img_size=img_size)
-#resize_data("drones", classes['drone'], "drone", out_dir, out_csv, img_size=img_size)
-#resize_data("faces", classes['person'], "person", out_dir, out_csv, img_size=img_size, nest=True)
-#resize_data("pikachu", classes['pikachu'], "pikachu", out_dir, out_csv, img_size=img_size)
+resize_data("cats", classes["cat"], "cat", out_dir, out_csv, img_size=img_size)
+resize_data("dogs", classes['dog'], "dog", out_dir, out_csv, img_size=img_size)
+resize_data("drones", classes['drone'], "drone", out_dir, out_csv, img_size=img_size)
+resize_data("faces", classes['person'], "person", out_dir, out_csv, img_size=img_size, nest=True)
+resize_data("pikachu", classes['pikachu'], "pikachu", out_dir, out_csv, img_size=img_size)
