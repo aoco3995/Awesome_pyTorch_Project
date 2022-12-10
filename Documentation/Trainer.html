@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module Trainer</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>Trainer</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Cstolf%5Conedrive%5Cgit%20directs%5Cawesome_pytorch_project%5Ctrainer.py">c:\users\stolf\onedrive\git directs\awesome_pytorch_project\trainer.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="torch.nn.html">torch.nn</a><br>
+</td><td width="25%" valign=top><a href="torch.optim.html">torch.optim</a><br>
+</td><td width="25%" valign=top><a href="torch.html">torch</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="Trainer.html#Trainer">Trainer</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Trainer">class <strong>Trainer</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Trainer">Trainer</a>(model,&nbsp;device,&nbsp;learning_rate,&nbsp;num_epochs,&nbsp;train_loader,&nbsp;momentum,&nbsp;weight_decay,&nbsp;dampening)<br>
+&nbsp;<br>
+<a href="#Trainer">Trainer</a>&nbsp;for&nbsp;a&nbsp;PyTorch&nbsp;model.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;model&nbsp;(torch.nn.Module):&nbsp;The&nbsp;model&nbsp;to&nbsp;train.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&nbsp;(torch.device):&nbsp;The&nbsp;device&nbsp;to&nbsp;train&nbsp;on&nbsp;(e.g.&nbsp;"cpu"&nbsp;or&nbsp;"cuda").<br>
+&nbsp;&nbsp;&nbsp;&nbsp;learning_rate&nbsp;(float):&nbsp;Learning&nbsp;rate&nbsp;for&nbsp;the&nbsp;optimizer.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;num_epochs&nbsp;(int):&nbsp;Number&nbsp;of&nbsp;epochs&nbsp;to&nbsp;train&nbsp;for.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;train_loader&nbsp;(torch.utils.data.DataLoader):&nbsp;DataLoader&nbsp;for&nbsp;the&nbsp;training&nbsp;data.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;momentum&nbsp;(float):&nbsp;Momentum&nbsp;for&nbsp;the&nbsp;optimizer.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;weight_decay&nbsp;(float):&nbsp;Weight&nbsp;decay&nbsp;for&nbsp;the&nbsp;optimizer.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dampening&nbsp;(float):&nbsp;Dampening&nbsp;for&nbsp;the&nbsp;optimizer.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Trainer-__init__"><strong>__init__</strong></a>(self, model, device, learning_rate, num_epochs, train_loader, momentum, weight_decay, dampening)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="Trainer-cost_list"><strong>cost_list</strong></a>(self)</dt><dd><tt>Prints&nbsp;the&nbsp;cost&nbsp;at&nbsp;each&nbsp;epoch&nbsp;during&nbsp;training.</tt></dd></dl>
+
+<dl><dt><a name="Trainer-save"><strong>save</strong></a>(self)</dt><dd><tt>Saves&nbsp;the&nbsp;trained&nbsp;model.</tt></dd></dl>
+
+<dl><dt><a name="Trainer-train"><strong>train</strong></a>(self)</dt><dd><tt>Trains&nbsp;the&nbsp;model&nbsp;for&nbsp;the&nbsp;specified&nbsp;number&nbsp;of&nbsp;epochs.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>

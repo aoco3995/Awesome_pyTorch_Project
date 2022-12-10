@@ -4,6 +4,20 @@ import torch.optim as optim
 
 
 class Trainer():
+
+    """Trainer for a PyTorch model.
+
+    Args:
+        model (torch.nn.Module): The model to train.
+        device (torch.device): The device to train on (e.g. "cpu" or "cuda").
+        learning_rate (float): Learning rate for the optimizer.
+        num_epochs (int): Number of epochs to train for.
+        train_loader (torch.utils.data.DataLoader): DataLoader for the training data.
+        momentum (float): Momentum for the optimizer.
+        weight_decay (float): Weight decay for the optimizer.
+        dampening (float): Dampening for the optimizer.
+    """
+
     def __init__(self, model, device, learning_rate, num_epochs, train_loader, momentum, weight_decay, dampening):
         self.num_epochs =num_epochs
         self.train_loader = train_loader
@@ -15,6 +29,8 @@ class Trainer():
         
 
     def train(self):
+
+        """Trains the model for the specified number of epochs."""
 
         for epoch in range(self.num_epochs):  # loop over the dataset multiple times
 
@@ -47,9 +63,11 @@ class Trainer():
         print('Finished Training')
 
     def save(self):
+        """Saves the trained model."""
         PATH = './custom_classifier_dataset.pth'
         torch.save(self.model.state_dict(), PATH)
 
     def cost_list(self):
+        """Prints the cost at each epoch during training."""
         for i in range(len(self.cost)):
             print(f'Cost at epoch {i+1} is {self.cost[i]}')

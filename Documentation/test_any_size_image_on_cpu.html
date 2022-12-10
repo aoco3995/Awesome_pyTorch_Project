@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module test_any_size_image_on_cpu</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>test_any_size_image_on_cpu</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Cstolf%5Conedrive%5Cgit%20directs%5Cawesome_pytorch_project%5Ctest_any_size_image_on_cpu.py">c:\users\stolf\onedrive\git directs\awesome_pytorch_project\test_any_size_image_on_cpu.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="cv2.html">cv2</a><br>
+</td><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top><a href="torch.html">torch</a><br>
+</td><td width="25%" valign=top><a href="torchvision.transforms.html">torchvision.transforms</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-predict_image"><strong>predict_image</strong></a>(image, Threshold)</dt><dd><tt>Predict&nbsp;the&nbsp;class&nbsp;of&nbsp;a&nbsp;given&nbsp;image.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;(numpy.ndarray):&nbsp;Image&nbsp;to&nbsp;classify.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Threshold&nbsp;(float):&nbsp;Threshold&nbsp;for&nbsp;class&nbsp;prediction.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tuple:&nbsp;A&nbsp;tuple&nbsp;containing&nbsp;the&nbsp;score&nbsp;and&nbsp;predicted&nbsp;class&nbsp;of&nbsp;the&nbsp;input&nbsp;image.&nbsp;If&nbsp;the&nbsp;score&nbsp;is&nbsp;below&nbsp;the&nbsp;threshold,&nbsp;the&nbsp;predicted&nbsp;class&nbsp;will&nbsp;be&nbsp;"none".</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>PATH</strong> = '200p_dataset_model_79_percent.pth'<br>
+<strong>classes</strong> = ('pikachu', 'drone', 'dog', 'cat', 'person')<br>
+<strong>device</strong> = device(type='cpu')<br>
+<strong>in_channels</strong> = 3<br>
+<strong>model</strong> = CNN(
+  (conv1): Conv2d(3, 10, kernel_size=(3, 3)...rue)
+  (dropout): Dropout(p=0.1, inplace=False)
+)<br>
+<strong>num_classes</strong> = 5</td></tr></table>
+</body></html>

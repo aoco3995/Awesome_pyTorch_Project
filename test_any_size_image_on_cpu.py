@@ -22,6 +22,17 @@ model.to(device)
 model.load_state_dict(torch.load(PATH, map_location=device))
 
 def predict_image(image, Threshold):
+
+    """Predict the class of a given image.
+
+    Args:
+        image (numpy.ndarray): Image to classify.
+        Threshold (float): Threshold for class prediction.
+
+    Returns:
+        tuple: A tuple containing the score and predicted class of the input image. If the score is below the threshold, the predicted class will be "none".
+    """
+
     cv2.imshow("",image)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     image = cv2.resize(image, (200,200))

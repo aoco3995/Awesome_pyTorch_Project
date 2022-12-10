@@ -14,6 +14,22 @@ from Trainer import Trainer
 import pickle
 
 class CPU_Unpickler(pickle.Unpickler):
+    """A class for unpickling PyTorch objects on the CPU.
+
+    This class extends the functionality of the built-in `pickle.Unpickler`
+    class by providing a custom `find_class` method that allows for loading
+    PyTorch storage objects from bytes on the CPU.
+
+    Args:
+        pickle.Unpickler: The base unpickler class from the `pickle` module.
+
+    Attributes:
+        None
+
+    Methods:
+        find_class: Overrides the base `find_class` method to provide custom
+            behavior for loading PyTorch storage objects from bytes on the CPU.
+    """
     def find_class(self, module, name):
         if module == 'torch.storage' and name == '_load_from_bytes':
             return lambda b: torch.load(io.BytesIO(b), map_location='cpu')
@@ -59,6 +75,18 @@ classes = ('pikachu', 'drone', 'dog', 'cat', 'person')
 
 
 def imshow(img):
+    """
+    imshow(img)
+
+    Displays an image using matplotlib.
+
+    This function takes in an image tensor `img` and displays it using matplotlib.
+    The image tensor is first unnormalized by applying the formula `img = img / 2 + 0.5`,
+    then converted to a NumPy array using the `numpy()` method, and finally displayed
+    using `plt.imshow()`, with the dimensions of the image tensor permuted to the correct
+    order using `np.transpose()`.
+
+    """
     img = img / 2 + 0.5     # unnormalize
     npimg = img.numpy()
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
@@ -99,7 +127,13 @@ if input("Train[y/n]:  ") == "y":
 
 
 def check_accuracy(loader, model):
+    """
+    check_accuracy(loader, model)
 
+    Displays an accuracy rating of the model given the a specific data set.
+
+    This function takes in an dataset and displays it using the terminal.
+    """
     # prepare to count predictions for each class
     correct_pred = {classname: 0 for classname in classes}
     total_pred = {classname: 0 for classname in classes}

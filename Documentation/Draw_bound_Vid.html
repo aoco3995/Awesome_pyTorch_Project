@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module Draw_bound_Vid</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>Draw_bound_Vid</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Cstolf%5Conedrive%5Cgit%20directs%5Cawesome_pytorch_project%5Cdraw_bound_vid.py">c:\users\stolf\onedrive\git directs\awesome_pytorch_project\draw_bound_vid.py</a></font></td></tr></table>
+    <p><tt>#import&nbsp;the&nbsp;necessary&nbsp;packages</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="bound_box.html">bound_box</a><br>
+</td><td width="25%" valign=top><a href="cv2.html">cv2</a><br>
+</td><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-array_to_mp4"><strong>array_to_mp4</strong></a>(image_array, video_name, fps=30)</dt><dd><tt>Converts&nbsp;an&nbsp;array&nbsp;of&nbsp;images&nbsp;to&nbsp;an&nbsp;MP4&nbsp;video.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;image_array&nbsp;(numpy.ndarray):&nbsp;Array&nbsp;of&nbsp;images&nbsp;to&nbsp;convert.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;video_name&nbsp;(str):&nbsp;Name&nbsp;of&nbsp;the&nbsp;output&nbsp;video&nbsp;file.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fps&nbsp;(int,&nbsp;optional):&nbsp;Frame&nbsp;rate&nbsp;of&nbsp;the&nbsp;output&nbsp;video.&nbsp;Defaults&nbsp;to&nbsp;30.</tt></dd></dl>
+ <dl><dt><a name="-draw_rectangle_with_label"><strong>draw_rectangle_with_label</strong></a>(image, label, x, y, width, height, color)</dt><dd><tt>Draw&nbsp;a&nbsp;rectangle&nbsp;on&nbsp;an&nbsp;image&nbsp;with&nbsp;a&nbsp;given&nbsp;label.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;image:&nbsp;The&nbsp;image&nbsp;on&nbsp;which&nbsp;to&nbsp;draw&nbsp;the&nbsp;rectangle.<br>
+&nbsp;&nbsp;label:&nbsp;The&nbsp;label&nbsp;to&nbsp;display&nbsp;on&nbsp;the&nbsp;image.<br>
+&nbsp;&nbsp;x:&nbsp;The&nbsp;x&nbsp;coordinate&nbsp;of&nbsp;the&nbsp;rectangle.<br>
+&nbsp;&nbsp;y:&nbsp;The&nbsp;y&nbsp;coordinate&nbsp;of&nbsp;the&nbsp;rectangle.<br>
+&nbsp;&nbsp;width:&nbsp;The&nbsp;width&nbsp;of&nbsp;the&nbsp;rectangle.<br>
+&nbsp;&nbsp;height:&nbsp;The&nbsp;height&nbsp;of&nbsp;the&nbsp;rectangle.<br>
+&nbsp;&nbsp;color:&nbsp;The&nbsp;color&nbsp;of&nbsp;the&nbsp;rectangle&nbsp;(as&nbsp;an&nbsp;(R,&nbsp;G,&nbsp;B)&nbsp;tuple).<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;The&nbsp;image&nbsp;with&nbsp;the&nbsp;rectangle&nbsp;and&nbsp;label&nbsp;drawn&nbsp;on&nbsp;it.</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>Threshold</strong> = tensor(9.8355, grad_fn=&lt;SelectBackward0&gt;)<br>
+<strong>bounding_class</strong> = 'person'<br>
+<strong>box_region</strong> = ((0, 0), (720, 480))<br>
+<strong>first_region</strong> = True<br>
+<strong>frame</strong> = array([[[255,   0,   0],
+        [255,   0,   0]... 0,   0],
+        [255,   0,   0]]], dtype=uint8)<br>
+<strong>grabbed</strong> = True<br>
+<strong>i</strong> = 1<br>
+<strong>image_array</strong> = [array([[[0, 0, 0],
+        [0, 0, 0],
+        [0...     [0, 0, 0],
+        [0, 0, 0]]], dtype=uint8), array([[[0, 0, 0],
+        [0, 0, 0],
+        [0...     [0, 0, 0],
+        [0, 0, 0]]], dtype=uint8), array([[[0, 0, 0],
+        [0, 0, 0],
+        [0...     [0, 0, 0],
+        [0, 0, 0]]], dtype=uint8), array([[[0, 0, 0],
+        [0, 0, 0],
+        [0...     [0, 0, 0],
+        [0, 0, 0]]], dtype=uint8), array([[[0, 0, 0],
+        [0, 0, 0],
+        [0...     [0, 0, 0],
+        [0, 0, 0]]], dtype=uint8), array([[[0, 0, 0],
+        [0, 0, 0],
+        [0...     [0, 0, 0],
+        [0, 0, 0]]], dtype=uint8), array([[[0, 0, 0],
+        [0, 0, 0],
+        [0...     [0, 0, 0],
+        [0, 0, 0]]], dtype=uint8), array([[[0, 0, 0],
+        [0, 0, 0],
+        [0...     [0, 0, 0],
+        [0, 0, 0]]], dtype=uint8), array([[[0, 0, 0],
+        [0, 0, 0],
+        [0...     [0, 0, 0],
+        [0, 0, 0]]], dtype=uint8), array([[[0, 0, 0],
+        [0, 0, 0],
+        [0...     [0, 0, 0],
+        [0, 0, 0]]], dtype=uint8), array([[[0, 0, 0],
+        [0, 0, 0],
+        [0...     [0, 0, 0],
+        [0, 0, 0]]], dtype=uint8), array([[[0, 0, 0],
+        [0, 0, 0],
+        [0...     [0, 0, 0],
+        [0, 0, 0]]], dtype=uint8), array([[[0, 0, 0],
+        [0, 0, 0],
+        [0...     [0, 0, 0],
+        [0, 0, 0]]], dtype=uint8), array([[[0, 0, 0],
+        [0, 0, 0],
+        [0...     [0, 0, 0],
+        [0, 0, 0]]], dtype=uint8), array([[[0, 0, 0],
+        [0, 0, 0],
+        [0...     [0, 0, 0],
+        [0, 0, 0]]], dtype=uint8), array([[[0, 0, 0],
+        [0, 0, 0],
+        [0...     [0, 0, 0],
+        [0, 0, 0]]], dtype=uint8), array([[[0, 0, 0],
+        [0, 0, 0],
+        [0...     [0, 0, 0],
+        [0, 0, 0]]], dtype=uint8), array([[[0, 0, 0],
+        [0, 0, 0],
+        [0...     [0, 0, 0],
+        [0, 0, 0]]], dtype=uint8), array([[[0, 0, 0],
+        [0, 0, 0],
+        [0...     [0, 0, 0],
+        [0, 0, 0]]], dtype=uint8), array([[[0, 0, 0],
+        [0, 0, 0],
+        [0...     [0, 0, 0],
+        [0, 0, 0]]], dtype=uint8), ...]<br>
+<strong>images_drawn</strong> = 61<br>
+<strong>key</strong> = -1<br>
+<strong>video</strong> = &lt; cv2.VideoCapture 000001D3514BDDD0&gt;</td></tr></table>
+</body></html>
